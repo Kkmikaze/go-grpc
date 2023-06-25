@@ -20,4 +20,66 @@ service MovieService {
       get: "/api/v1/movies/healthz",
     };
   }
+
+  rpc CreateMovie (CreateMovieRequest) returns (Response) {
+    option (google.api.http) = {
+      post: "/api/v1/movies",
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: ["Movie"]
+      summary: "Create Movie"
+      description: "This API for create movie"
+    };
+  }
+
+  rpc GetMovie (GetMovieRequest) returns (GetMovieResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/movies"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: ["Movie"]
+      summary: "List Of Movie"
+      description: "This API for get movie"
+    };
+  }
+
+  rpc GetMovieByID (ParamID) returns (GetMovieByIDResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/movie/{id}"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: ["Movie"]
+      summary: "Get Movie By ID"
+      description: "This API for get movie by id"
+    };
+  }
+
+  rpc UpdateMovie (MovieData) returns (UpdateMovieResponse) {
+    option (google.api.http) = {
+      put: "/api/v1/movie/{id}",
+      body: "*"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: ["Movie"]
+      summary: "Update Movie"
+      description: "This API for update movie"
+    };
+  }
+
+  rpc DeleteMovie (ParamID) returns (Response) {
+    option (google.api.http) = {
+      delete: "/api/v1/movie/{id}"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      tags: ["Movie"]
+      summary: "Delete Movie"
+      description: "This API for delete movie"
+    };
+  }
 }

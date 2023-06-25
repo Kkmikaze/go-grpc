@@ -16,6 +16,210 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/movie/{id}": {
+      "get": {
+        "summary": "Get Movie By ID",
+        "description": "This API for get movie by id",
+        "operationId": "MovieService_GetMovieByID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetMovieByIDResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Movie"
+        ]
+      },
+      "delete": {
+        "summary": "Delete Movie",
+        "description": "This API for delete movie",
+        "operationId": "MovieService_DeleteMovie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/moviev1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Movie"
+        ]
+      },
+      "put": {
+        "summary": "Update Movie",
+        "description": "This API for update movie",
+        "operationId": "MovieService_UpdateMovie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateMovieResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "duration": {
+                  "type": "string"
+                },
+                "artist": {
+                  "type": "string"
+                },
+                "genre": {
+                  "type": "string"
+                },
+                "videoUrl": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Movie"
+        ]
+      }
+    },
+    "/api/v1/movies": {
+      "get": {
+        "summary": "List Of Movie",
+        "description": "This API for get movie",
+        "operationId": "MovieService_GetMovie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetMovieResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "search",
+            "description": "Search Movie By Title or Description or Artist or Genre",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Page number to get data..",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "itemPerPage",
+            "description": "Limit data per page.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Movie"
+        ]
+      },
+      "post": {
+        "summary": "Create Movie",
+        "description": "This API for create movie",
+        "operationId": "MovieService_CreateMovie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/moviev1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateMovieRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Movie"
+        ]
+      }
+    },
     "/api/v1/movies/healthz": {
       "get": {
         "operationId": "MovieService_Check",
@@ -40,6 +244,17 @@
     }
   },
   "definitions": {
+    "moviev1Response": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -73,6 +288,114 @@
             "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
+        }
+      }
+    },
+    "v1CreateMovieRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "artist": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "videoUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetMovieByIDResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1MovieData"
+        }
+      }
+    },
+    "v1GetMovieData": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1MovieData"
+          }
+        },
+        "total": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "v1GetMovieResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1GetMovieData"
+        }
+      }
+    },
+    "v1MovieData": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "artist": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "videoUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UpdateMovieResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/v1MovieData"
         }
       }
     }

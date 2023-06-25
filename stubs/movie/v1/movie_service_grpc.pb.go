@@ -19,7 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MovieService_Check_FullMethodName = "/roketin.movie.v1.MovieService/Check"
+	MovieService_Check_FullMethodName        = "/roketin.movie.v1.MovieService/Check"
+	MovieService_CreateMovie_FullMethodName  = "/roketin.movie.v1.MovieService/CreateMovie"
+	MovieService_GetMovie_FullMethodName     = "/roketin.movie.v1.MovieService/GetMovie"
+	MovieService_GetMovieByID_FullMethodName = "/roketin.movie.v1.MovieService/GetMovieByID"
+	MovieService_UpdateMovie_FullMethodName  = "/roketin.movie.v1.MovieService/UpdateMovie"
+	MovieService_DeleteMovie_FullMethodName  = "/roketin.movie.v1.MovieService/DeleteMovie"
 )
 
 // MovieServiceClient is the client API for MovieService service.
@@ -27,6 +32,11 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MovieServiceClient interface {
 	Check(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	CreateMovie(ctx context.Context, in *CreateMovieRequest, opts ...grpc.CallOption) (*Response, error)
+	GetMovie(ctx context.Context, in *GetMovieRequest, opts ...grpc.CallOption) (*GetMovieResponse, error)
+	GetMovieByID(ctx context.Context, in *ParamID, opts ...grpc.CallOption) (*GetMovieByIDResponse, error)
+	UpdateMovie(ctx context.Context, in *MovieData, opts ...grpc.CallOption) (*UpdateMovieResponse, error)
+	DeleteMovie(ctx context.Context, in *ParamID, opts ...grpc.CallOption) (*Response, error)
 }
 
 type movieServiceClient struct {
@@ -46,11 +56,61 @@ func (c *movieServiceClient) Check(ctx context.Context, in *HealthCheckRequest, 
 	return out, nil
 }
 
+func (c *movieServiceClient) CreateMovie(ctx context.Context, in *CreateMovieRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, MovieService_CreateMovie_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *movieServiceClient) GetMovie(ctx context.Context, in *GetMovieRequest, opts ...grpc.CallOption) (*GetMovieResponse, error) {
+	out := new(GetMovieResponse)
+	err := c.cc.Invoke(ctx, MovieService_GetMovie_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *movieServiceClient) GetMovieByID(ctx context.Context, in *ParamID, opts ...grpc.CallOption) (*GetMovieByIDResponse, error) {
+	out := new(GetMovieByIDResponse)
+	err := c.cc.Invoke(ctx, MovieService_GetMovieByID_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *movieServiceClient) UpdateMovie(ctx context.Context, in *MovieData, opts ...grpc.CallOption) (*UpdateMovieResponse, error) {
+	out := new(UpdateMovieResponse)
+	err := c.cc.Invoke(ctx, MovieService_UpdateMovie_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *movieServiceClient) DeleteMovie(ctx context.Context, in *ParamID, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, MovieService_DeleteMovie_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MovieServiceServer is the server API for MovieService service.
 // All implementations must embed UnimplementedMovieServiceServer
 // for forward compatibility
 type MovieServiceServer interface {
 	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	CreateMovie(context.Context, *CreateMovieRequest) (*Response, error)
+	GetMovie(context.Context, *GetMovieRequest) (*GetMovieResponse, error)
+	GetMovieByID(context.Context, *ParamID) (*GetMovieByIDResponse, error)
+	UpdateMovie(context.Context, *MovieData) (*UpdateMovieResponse, error)
+	DeleteMovie(context.Context, *ParamID) (*Response, error)
 	mustEmbedUnimplementedMovieServiceServer()
 }
 
@@ -60,6 +120,21 @@ type UnimplementedMovieServiceServer struct {
 
 func (UnimplementedMovieServiceServer) Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
+}
+func (UnimplementedMovieServiceServer) CreateMovie(context.Context, *CreateMovieRequest) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateMovie not implemented")
+}
+func (UnimplementedMovieServiceServer) GetMovie(context.Context, *GetMovieRequest) (*GetMovieResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMovie not implemented")
+}
+func (UnimplementedMovieServiceServer) GetMovieByID(context.Context, *ParamID) (*GetMovieByIDResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMovieByID not implemented")
+}
+func (UnimplementedMovieServiceServer) UpdateMovie(context.Context, *MovieData) (*UpdateMovieResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMovie not implemented")
+}
+func (UnimplementedMovieServiceServer) DeleteMovie(context.Context, *ParamID) (*Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteMovie not implemented")
 }
 func (UnimplementedMovieServiceServer) mustEmbedUnimplementedMovieServiceServer() {}
 
@@ -92,6 +167,96 @@ func _MovieService_Check_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MovieService_CreateMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateMovieRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).CreateMovie(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MovieService_CreateMovie_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).CreateMovie(ctx, req.(*CreateMovieRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MovieService_GetMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMovieRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).GetMovie(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MovieService_GetMovie_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).GetMovie(ctx, req.(*GetMovieRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MovieService_GetMovieByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParamID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).GetMovieByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MovieService_GetMovieByID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).GetMovieByID(ctx, req.(*ParamID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MovieService_UpdateMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MovieData)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).UpdateMovie(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MovieService_UpdateMovie_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).UpdateMovie(ctx, req.(*MovieData))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MovieService_DeleteMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ParamID)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).DeleteMovie(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MovieService_DeleteMovie_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).DeleteMovie(ctx, req.(*ParamID))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MovieService_ServiceDesc is the grpc.ServiceDesc for MovieService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +267,26 @@ var MovieService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Check",
 			Handler:    _MovieService_Check_Handler,
+		},
+		{
+			MethodName: "CreateMovie",
+			Handler:    _MovieService_CreateMovie_Handler,
+		},
+		{
+			MethodName: "GetMovie",
+			Handler:    _MovieService_GetMovie_Handler,
+		},
+		{
+			MethodName: "GetMovieByID",
+			Handler:    _MovieService_GetMovieByID_Handler,
+		},
+		{
+			MethodName: "UpdateMovie",
+			Handler:    _MovieService_UpdateMovie_Handler,
+		},
+		{
+			MethodName: "DeleteMovie",
+			Handler:    _MovieService_DeleteMovie_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
