@@ -36,3 +36,6 @@ go.work
 
 # Build directory
 build/
+
+# Temp directory
+tmp/
