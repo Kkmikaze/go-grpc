@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package roketin.auth.v1;
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/Kkmikaze/roketin/proto/auth/v1;authv1";
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string message = 1;
+}

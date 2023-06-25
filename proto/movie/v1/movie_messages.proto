@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package roketin.movie.v1;
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/Kkmikaze/roketin/proto/movie/v1;moviev1";
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string message = 1;
+}
+// End Price Groups Module
